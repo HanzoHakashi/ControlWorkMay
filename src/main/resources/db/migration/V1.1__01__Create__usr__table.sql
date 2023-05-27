@@ -1,10 +1,9 @@
 CREATE TABLE IF NOT EXISTS usr (
-  id BIGSERIAL,
+   id BIGSERIAL PRIMARY KEY,
   name VARCHAR(25) NOT NULL,
   email VARCHAR(25) NOT NULL,
   login VARCHAR(25) NOT NULL,
-  password VARCHAR(16) NOT NULL,
+  password VARCHAR(255) NOT NULL,
   enable BOOLEAN NOT NULL,
-  role VARCHAR(20) NOT NULL,
-  CONSTRAINT usr_id primary key (id)
+  role VARCHAR(20) NOT NULL
 );

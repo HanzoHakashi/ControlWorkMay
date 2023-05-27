@@ -27,7 +27,7 @@ public class User {
     @Column(length = 25)
     private String login;
 
-    @Column(length = 16)
+    @Column
     private String password;
 
     private Boolean enable;
@@ -35,4 +35,17 @@ public class User {
     @Enumerated(EnumType.STRING)
     private UserRole role;
 
+
+    @Override
+    public String toString() {
+        return "User{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                ", email='" + email + '\'' +
+                ", login='" + login + '\'' +
+                ", password='" + password + '\'' +
+                ", enable=" + enable +
+                ", role=" + role +
+                '}';
+    }
 }

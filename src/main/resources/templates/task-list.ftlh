@@ -10,16 +10,19 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
 </head>
 <body>
-<nav class="navbar navbar-light bg-light">
-    <div class="container-fluid justify-content-start">
-        <#if isAuthenticated>
-        <button class="btn btn-outline-danger me-2" type="button">Logout</button>
-        <button class="btn btn-primary me-2" type="button">Create Task</button>
+<header>
+    <nav class="navbar navbar-light bg-light">
+        <div class="container-fluid justify-content-start">
+            <#if isAuthenticated>
+            <a class="btn btn-outline-danger me-2" type="button" href="/logout">Logout</a>
+            <#if isManager>
+            <a class="btn btn-primary me-2" type="button" href="/create-task">Create Task</a>
+        </#if>
         <#else>
         <a class="btn btn-outline-success me-2" type="button" href="/login">Login</a>
     </#if>
     </div>
-</nav>
+    </nav>
 </header>
 <div class="container"><h1>Task List</h1>
     <table  class="table table-striped">

@@ -1,12 +1,11 @@
 CREATE TABLE IF NOT EXISTS tasks (
-  id BIGSERIAL ,
+   id BIGSERIAL PRIMARY KEY ,
   name VARCHAR(20) NOT NULL,
-  creationDate DATE DEFAULT CURRENT_DATE,
-  developerId BIGSERIAL,
-  status VARCHAR(20) NOT NULL,
-  CONSTRAINT tasks_id primary key (id)
+  creation_date DATE DEFAULT CURRENT_DATE,
+  developer_id BIGSERIAL,
+  status VARCHAR(20) NOT NULL
 );
 
 ALTER TABLE tasks
 ADD CONSTRAINT TASKS_DEVELOPER_ID_FK
-FOREIGN KEY (developerId) REFERENCES usr (id);
+FOREIGN KEY (developer_id) REFERENCES usr (id);

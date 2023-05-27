@@ -26,7 +26,7 @@ public class Task {
     private Date creationDate;
 
     @ManyToOne
-    @JoinColumn(name = "developerId")
+    @JoinColumn(name = "developer_id")
     private User developerId;
 
     @Enumerated(EnumType.STRING)
