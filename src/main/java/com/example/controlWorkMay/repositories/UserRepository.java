@@ -1,4 +1,4 @@
-package com.example.controlWorkMay.repositorys;
+package com.example.controlWorkMay.repositories;
 
 import com.example.controlWorkMay.entity.User;
 import org.springframework.data.repository.CrudRepository;
