@@ -13,10 +13,13 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import java.security.Principal;
+import java.sql.Date;
+import java.time.LocalDate;
 import java.util.List;
 
 @Controller
@@ -49,5 +52,19 @@ public class TaskController {
         return "task-list";
     }
 
+    @GetMapping("/tasks/new")
+    public String createTask( ModelMap model){
+        List<User> developers = userService.findByRole(UserRole.DEVELOPER);
+        System.out.println(developers.toString());
+        model.addAttribute("developers", developers);
+        return "task-create";
+    }
+
+    @PostMapping("/tasks/new")
+    public String createTaskPost(TaskDto taskDto){
+        taskDto.setCreationDate(Date.valueOf(LocalDate.now()));
+        taskService.createTask(taskDto);
+        return "redirect:/";
+    }
 }
 

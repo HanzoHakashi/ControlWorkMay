@@ -2,11 +2,14 @@ package com.example.controlWorkMay.services;
 
 import com.example.controlWorkMay.dto.UserDto;
 import com.example.controlWorkMay.entity.User;
+import com.example.controlWorkMay.entity.UserRole;
 import com.example.controlWorkMay.mapper.UserMapper;
 import com.example.controlWorkMay.repositories.UserRepository;
 import lombok.AllArgsConstructor;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
 
 @Service
 @AllArgsConstructor
@@ -23,6 +26,10 @@ public class UserService {
                 .enable(user.getEnable())
                 .role(user.getRole())
                 .build());
+    }
+
+    public List<User> findByRole(UserRole role){
+        return userRepository.findAllByRole(role);
     }
 
     public User getUserByUsername(String username) {

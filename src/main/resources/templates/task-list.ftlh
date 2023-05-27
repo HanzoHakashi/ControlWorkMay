@@ -16,7 +16,7 @@
             <#if isAuthenticated>
             <a class="btn btn-outline-danger me-2" type="button" href="/logout">Logout</a>
             <#if isManager>
-            <a class="btn btn-primary me-2" type="button" href="/create-task">Create Task</a>
+            <a class="btn btn-primary me-2" type="button" href="/tasks/new">Create Task</a>
         </#if>
         <#else>
         <a class="btn btn-outline-success me-2" type="button" href="/login">Login</a>
