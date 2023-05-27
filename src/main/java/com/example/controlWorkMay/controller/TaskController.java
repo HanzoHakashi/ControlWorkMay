@@ -10,11 +10,9 @@ import com.example.controlWorkMay.services.UserService;
 import lombok.AllArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import java.security.Principal;
@@ -45,6 +43,9 @@ public class TaskController {
             boolean isManager = false;
             if (user != null && user.getRole() == UserRole.MANAGER) {
                 isManager = true;
+            }else if (user!= null && user.getRole() == UserRole.DEVELOPER ) {
+                Page<TaskDto> list2 = taskService.getTasksByDeveloper(user, page, size);;
+                model.addAttribute("tasks", list2);
             }
             model.addAttribute("isManager", isManager);
         }

@@ -17,6 +17,7 @@
             <a class="btn btn-outline-danger me-2" type="button" href="/logout">Logout</a>
             <#if isManager>
             <a class="btn btn-primary me-2" type="button" href="/tasks/new">Create Task</a>
+            <a class="btn btn-primary me-2" type="button" href="/register">Create New User</a>
         </#if>
         <#else>
         <a class="btn btn-outline-success me-2" type="button" href="/login">Login</a>
@@ -32,6 +33,7 @@
             <th>Creation Date</th>
             <th>Developer</th>
             <th>Status</th>
+            <th>Function</th>
         </tr>
         </thead>
         <tbody>
@@ -41,8 +43,12 @@
             <td>${task.creationDate}</td>
             <td>${task.developerId.name}</td>
             <td>${task.status}</td>
-        </tr>
+            <td>  <a class="btn btn-primary me-2" type="button" href="/tasks/edit">Edit</a></td>
         </#list>
+
+
+        </tr>
+
         </tbody>
     </table>
 

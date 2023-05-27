@@ -2,11 +2,13 @@ package com.example.controlWorkMay.services;
 
 import com.example.controlWorkMay.dto.TaskDto;
 import com.example.controlWorkMay.entity.Task;
+import com.example.controlWorkMay.entity.User;
 import com.example.controlWorkMay.mapper.TaskMapper;
 import com.example.controlWorkMay.repositories.TaskRepository;
 import lombok.AllArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -23,5 +25,12 @@ public class TaskService {
     }
     public void createTask(TaskDto task){
         taskRepository.save(taskMapper.fromDto(task));
+    }
+
+
+    public Page<TaskDto> getTasksByDeveloper(User developer, int page, int size) {
+        Pageable pageable = PageRequest.of(page, size);
+        Page<Task> tasks = taskRepository.getTasksByDeveloper(developer, pageable);
+        return tasks.map(TaskMapper::fromTask);
     }
 }
