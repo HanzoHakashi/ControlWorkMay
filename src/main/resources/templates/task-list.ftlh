@@ -43,7 +43,9 @@
             <td>${task.creationDate}</td>
             <td>${task.developerId.name}</td>
             <td>${task.status}</td>
-            <td>  <a class="btn btn-primary me-2" type="button" href="/tasks/edit">Edit</a></td>
+            <td>
+                <a class="btn btn-primary me-2" type="button" href="/tasks/edit?taskId=${task.id}">Edit</a>
+            </td>
         </#list>
 
 

@@ -10,8 +10,8 @@ import java.util.Date;
 @Entity
 @Table(name = "worklogs")
 @Builder(toBuilder = true)
-@AllArgsConstructor(access = AccessLevel.PACKAGE)
-@NoArgsConstructor(access = AccessLevel.PACKAGE)
+@AllArgsConstructor
+@NoArgsConstructor
 @Setter
 @Getter
 public class WorkLog {

@@ -33,7 +33,6 @@ public class UserController {
 
     @PostMapping("/register")
     public String registerPost(UserDto userDto) {
-        System.out.println(userDto.toString());
             userDto.setEnable(true);
             userService.createUser(userDto);
             return "redirect:/login";

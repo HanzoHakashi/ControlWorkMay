@@ -1,9 +1,7 @@
 package com.example.controlWorkMay.controller;
 
 import com.example.controlWorkMay.dto.TaskDto;
-import com.example.controlWorkMay.entity.Task;
-import com.example.controlWorkMay.entity.User;
-import com.example.controlWorkMay.entity.UserRole;
+import com.example.controlWorkMay.entity.*;
 import com.example.controlWorkMay.mapper.TaskMapper;
 import com.example.controlWorkMay.services.TaskService;
 import com.example.controlWorkMay.services.UserService;
@@ -12,12 +10,15 @@ import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import java.security.Principal;
 import java.sql.Date;
 import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 @Controller
@@ -31,9 +32,8 @@ public class TaskController {
                            ModelMap model,
                            Principal principal) {
         Page<Task> list = taskService.getAllTasks(page, size);
-        Page<TaskDto> tasks = list.map(TaskMapper::fromTask);
 
-        model.put("tasks", tasks);
+        model.put("tasks", list);
         boolean isAuthenticated = principal != null;
         model.addAttribute("isAuthenticated", isAuthenticated);
 
@@ -44,7 +44,7 @@ public class TaskController {
             if (user != null && user.getRole() == UserRole.MANAGER) {
                 isManager = true;
             }else if (user!= null && user.getRole() == UserRole.DEVELOPER ) {
-                Page<TaskDto> list2 = taskService.getTasksByDeveloper(user, page, size);;
+                Page<Task> list2 = taskService.getTasksByDeveloper(user, page, size);;
                 model.addAttribute("tasks", list2);
             }
             model.addAttribute("isManager", isManager);
@@ -56,7 +56,6 @@ public class TaskController {
     @GetMapping("/tasks/new")
     public String createTask( ModelMap model){
         List<User> developers = userService.findByRole(UserRole.DEVELOPER);
-        System.out.println(developers.toString());
         model.addAttribute("developers", developers);
         return "task-create";
     }
@@ -67,5 +66,64 @@ public class TaskController {
         taskService.createTask(taskDto);
         return "redirect:/";
     }
+
+    @GetMapping("/tasks/edit")
+    public String editTask(@RequestParam("taskId") Long taskId, ModelMap model) {
+        Task task = taskService.getTaskById(taskId);
+        if (task == null) {
+            return "redirect:/tasks";
+        }
+        List<TaskStatus> taskStatusList = new ArrayList<>();
+        taskStatusList.add(TaskStatus.FAILED);
+        switch (task.getStatus()) {
+            case CREATED:
+                taskStatusList.add(TaskStatus.IN_PROGRESS);
+                break;
+            case IN_PROGRESS:
+                taskStatusList.add(TaskStatus.COMPLETED);
+                break;
+            case COMPLETED:
+                break;
+        }
+
+
+        List<WorkLog> workLogs = taskService.getWorkLogsForTask(taskId);
+
+        model.addAttribute("task", task);
+        model.addAttribute("taskStatusList", taskStatusList);
+        model.addAttribute("workLogs", workLogs);
+
+        return "task-edit";
+    }
+
+    @PostMapping("/tasks/update")
+    public String updateTask(@ModelAttribute("task") Task task,
+                             @RequestParam("newLogDescription") String newLogDescription) {
+        Task existingTask = taskService.getTaskById(task.getId());
+        if (existingTask == null) {
+            return "redirect:/";
+        }
+
+
+
+        existingTask.setStatus(task.getStatus());
+
+
+
+
+        WorkLog newWorkLog = new WorkLog();
+        newWorkLog.setTask(task);
+        newWorkLog.setTime(Date.valueOf(LocalDate.now()));
+        newWorkLog.setDescription(newLogDescription);
+        newWorkLog.setTask(existingTask);
+        taskService.createWorkLog(newWorkLog);
+
+        taskService.updateTask(existingTask);
+
+        return "redirect:/";
+    }
+
+
+
 }
 

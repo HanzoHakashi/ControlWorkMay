@@ -31,4 +31,15 @@ public class Task {
 
     @Enumerated(EnumType.STRING)
     private TaskStatus status;
+
+    @Override
+    public String toString() {
+        return "Task{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                ", creationDate=" + creationDate +
+                ", developerId=" + developerId +
+                ", status=" + status +
+                '}';
+    }
 }
