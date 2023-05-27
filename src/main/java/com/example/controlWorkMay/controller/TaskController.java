@@ -78,11 +78,15 @@ public class TaskController {
         switch (task.getStatus()) {
             case CREATED:
                 taskStatusList.add(TaskStatus.IN_PROGRESS);
+                taskStatusList.add(TaskStatus.CREATED);
                 break;
             case IN_PROGRESS:
                 taskStatusList.add(TaskStatus.COMPLETED);
+                taskStatusList.add(TaskStatus.IN_PROGRESS);
                 break;
             case COMPLETED:
+                taskStatusList.clear();
+                taskStatusList.add(TaskStatus.COMPLETED);
                 break;
         }
 

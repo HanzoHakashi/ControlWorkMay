@@ -41,7 +41,14 @@
     <label for="newLogDescription">New Log Description</label>
     <input type="text" class="form-control" id="newLogDescription" name="newLogDescription">
 </div>
-<button type="submit" class="btn btn-primary">Add Log</button>
+<#if task.attachment?has_content>
+<div class="mb-3">
+    <label for="attachment">Attachment</label>
+    <a href="${task.attachment}" download>Download Attachment</a>
+</div>
+</#if>
+
+<button type="submit" class="btn btn-primary">Submit</button>
 </form>
 </div>
 
